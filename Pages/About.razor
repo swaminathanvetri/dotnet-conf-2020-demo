@@ -1,0 +1,21 @@
+@page "/about"
+@using System.Threading.Tasks;
+@using dotnet_conf_2020_demo.Models;
+@inject HttpClient Http;
+
+<div>
+    <AboutComponent speaker="@speaker"></AboutComponent>
+</div>
+
+@code {
+    private SpeakerProfile speaker { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        speaker = new SpeakerProfile
+        {
+            SocialHandle = new SocialLink(),
+            OtherInterests = new List<string>()
+        };
+        speaker = await Http.GetFromJsonAsync<SpeakerProfile>("sample-data/swami.json");
+    }
+}

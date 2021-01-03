@@ -1,0 +1,76 @@
+@using dotnet_conf_2020_demo.Models;
+
+<div class="row">
+    <div class="col-sm-3 col-md-3">
+        <div class="card" style="width: 23rem;">
+            <h2 class="card-header">@speaker.Name </h2>
+            <img class="card-img-top img-rounded" style="width: 100%;" src="@speaker.ProfilePic" alt="image" />
+            <h3 class="card-footer">Microsoft MVP</h3>
+        </div>
+    </div>
+    <div class="col-sm-9 col-md-9">
+        <div class="card text-white bg-secondary">
+            <div class="card-body">
+                <h2 class="card-title"> Bio</h2>
+                <p>@speaker.Bio</p>
+            </div>
+        </div>
+        <br />
+        <div class="card bg-light">
+            <div class="card-body">
+                <h2 class="card-title"> Social Handles</h2>
+                <ul>
+                    @if (@speaker.SocialHandle.FaceBook is not null)
+                    {
+                        <div class="social-links"> <span class="fa fa-facebook" aria-hidden="true"></span>
+                            @speaker.SocialHandle.FaceBook </div>
+                    }
+                    @if (@speaker.SocialHandle.Twitter is not null)
+                    {
+                        <div class="social-links"><span class="fa fa-twitter" aria-hidden="true"></span>
+                            @speaker.SocialHandle.Twitter</div>
+                    }
+                    @if (@speaker.SocialHandle.LinkedIn is not null)
+                    {
+                        <div class="social-links"><span class="fa fa-linkedin" aria-hidden="true"></span>
+                            @speaker.SocialHandle.LinkedIn</div>
+                    }
+                    @if (@speaker.SocialHandle.GitHub is not null)
+                    {
+                        <div class="social-links"><span class="fa fa-github" aria-hidden="true"></span>
+                            @speaker.SocialHandle.GitHub</div>
+                    }
+                    @if (@speaker.SocialHandle.YouTube is not null)
+                    {
+                        <div class="social-links"><span class="fa fa-youtube" aria-hidden="true"></span>
+                            @speaker.SocialHandle.YouTube</div>
+                    }
+                    @if (@speaker.SocialHandle.Blog is not null)
+                    {
+                        <div class="social-links"><span class="fa fa-wordpress" aria-hidden="true"></span>
+                            @speaker.SocialHandle.Blog</div>
+                    }
+                </ul>
+            </div>
+        </div>
+        <br />
+        <div class="card text-white bg-dark">
+            <div class="card-body">
+                <h2 class="card-title"> Other Interests</h2>
+                <ul>
+                    @foreach (var interest in @speaker.OtherInterests)
+                    {
+                        <li>@interest</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+</div>
+@code{
+    [Parameter]
+    public SpeakerProfile speaker { get; set; }
+}

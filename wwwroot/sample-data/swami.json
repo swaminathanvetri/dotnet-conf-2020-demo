@@ -1,0 +1,18 @@
+{
+    "name": "Swaminathan Vetri",
+    "profilePic": "https://swaminathanvetri.blob.core.windows.net/blog-images/swami-june2020.jpg",
+    "socialHandle": {
+        "faceBook": null,
+        "twitter": "svswaminathan",
+        "linkedIn": "swaminathanvetri",
+        "gitHub": "svswaminathan",
+        "blog": "swaminathanvetri.in",
+        "youTube": "youtube.com/c/swaminathanvetri"
+    },
+    "otherInterests": [
+        "Photography",
+        "Travel",
+        "Home automation"
+    ],
+    "bio": "Software Architect at Maersk, Working on Cloud native applications on Azure using Microservices architecture, Docker, Kubernetes, etc., A DevOps enthusiast. \r\n Passionate about learning and sharing about technologies"
+}

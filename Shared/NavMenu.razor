@@ -1,0 +1,87 @@
+﻿<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">dotnet-conf-2020-demo</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="about">
+                <span class="oi oi-plus" aria-hidden="true"></span> About Me
+            </NavLink>
+        </li>
+        @* <li class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+            <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            </NavLink>
+            </li>
+            <li class="nav-item px-3">
+            <NavLink class="nav-link" href="fetchdata">
+            <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            </NavLink>
+            </li> *@
+
+        <li class="nav-item px-3">
+            <NavLink>
+                <span>Demo</span>
+                <hr />
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="autorefresh">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Auto Refresh
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="cssisolation">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> CSS Isolation
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="inputfile">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Input File
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="inputradio">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Input Radio
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="setuifocus">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Set UI Focus
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="lazyloading">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Lazy Loading
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="prerendering">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Pre rendering
+            </NavLink>
+        </li>
+
+
+
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
