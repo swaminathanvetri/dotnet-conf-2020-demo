@@ -1,2 +1,144 @@
 @page "/inputfile"
-<h2> Input file demo goes here</h2>
+<div>
+    <h3>Upload Multiple Files Demo</h3>
+
+    <div>
+        <p>
+            <InputFile OnChange="@OnInputFileChange" multiple />
+        </p>
+
+        @if (isMaxLimitReached)
+        {
+            <h3> Maximum allowed files for upload is @maxAllowedFiles </h3>
+        }
+
+        @if (imageDataUrls.Count > 0)
+        {
+            <h4>Images</h4>
+
+            <div class="card" style="width:30rem;">
+            <div class="card-body">
+                @foreach (var imageDataUrl in imageDataUrls)
+                    {
+                        <img class="rounded m-1" src="@imageDataUrl" />
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<hr />
+<div>
+    <h3> Image resizer Demo</h3>
+    <EditForm Model="@resizedImageProperties" OnSubmit="@OnSubmit">
+        <label>Enter the height :
+            <InputNumber @bind-Value="resizedImageProperties.MaxHeight"></InputNumber>
+        </label>
+
+        <label>Enter the width :
+            <InputNumber @bind-Value="resizedImageProperties.MaxWidth"></InputNumber>
+        </label>
+
+        <button type="submit">Resize</button>
+    </EditForm>
+
+    <p>
+        <InputFile OnChange="@OnResizeFileChange" />
+    </p>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">Original Image</div>
+                <div class="card-content">
+                    <img class="rounded m-1" style="width: 100%;" src="@originalImage" />
+                </div>
+            </div>
+        </div>
+        <div class="col">
+
+            <div class="card" style="width: @resizedImageWidth; height: @resizedImageHeight;">
+                <div class="card-header">Resized Image (@resizedImageWidth x @resizedImageHeight )</div>
+                <div class="card-content">
+                    <img class="rounded m-1" src="@resizedImage" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+    private IList<string> imageDataUrls = new List<string>();
+
+    private bool isMaxLimitReached = false;
+
+    private int maxAllowedFiles = 3;
+
+    private ImageProperties resizedImageProperties;
+    private string format = "image/png";
+    private string originalImage;
+    private string resizedImage;
+    private string resizedImageWidth;
+    private string resizedImageHeight;
+
+    private IBrowserFile originalFile;
+
+    protected override void OnInitialized()
+    {
+        resizedImageProperties = new ImageProperties();
+    }
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        isMaxLimitReached = false;
+
+        try
+        {
+            foreach (var imageFile in e.GetMultipleFiles(maxAllowedFiles))
+            {
+                var resizedImageFile = await imageFile.RequestImageFileAsync(format,
+                    100, 100);
+                var buffer = new byte[resizedImageFile.Size];
+                await resizedImageFile.OpenReadStream().ReadAsync(buffer);
+                var imageDataUrl =
+                    $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+                imageDataUrls.Add(imageDataUrl);
+            }
+
+        }
+        catch (System.Exception)
+        {
+            isMaxLimitReached = true;
+        }
+
+    }
+
+    private async Task OnResizeFileChange(InputFileChangeEventArgs e)
+    {
+        originalFile = e.File;
+        var originalImageBuffer = new byte[originalFile.Size];
+        await e.File.OpenReadStream().ReadAsync(originalImageBuffer);
+        originalImage = $"data:{format};base64,{Convert.ToBase64String(originalImageBuffer)}";
+
+        await ResizeImage(resizedImageProperties.MaxWidth, resizedImageProperties.MaxHeight);
+
+    }
+
+    private async Task ResizeImage(int maxWidth, int maxHeight)
+    {
+        var resizedImageFile = await originalFile.RequestImageFileAsync(format, maxWidth, maxHeight);
+        var buffer = new byte[resizedImageFile.Size];
+        await resizedImageFile.OpenReadStream().ReadAsync(buffer);
+        resizedImage =
+            $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+        resizedImageHeight = $"{resizedImageProperties.MaxHeight}px";
+        resizedImageWidth = $"{resizedImageProperties.MaxWidth}px";
+    }
+
+    private async Task OnSubmit()
+    {
+        await ResizeImage(resizedImageProperties.MaxWidth, resizedImageProperties.MaxHeight);
+    }
+}
