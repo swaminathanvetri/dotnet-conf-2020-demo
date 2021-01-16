@@ -1,39 +1,8 @@
 ﻿@page "/"
 
 <h1>Welcome to .NET Conf Bengaluru 2020</h1>
-
-<div class="row">
-    <div class="col">
-        <div class="panel panel-default">
-            <div class="panel-heading">Developer Experience Updates</div>
-            <div class="panel-body">
-                <ul>
-                    @foreach (var item in devExDemoItems)
-                    {
-                        <li> @item</li>
-                    }
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Perf Improvement updates</div>
-            <div class="panel-body">
-
-            </div>
-        </div>
-    </div>
-</div>
+<hr>
 
 @code{
-    private List<string> devExDemoItems { get; set; }
 
-
-    protected override void OnInitialized()
-    {
-        devExDemoItems = new List<string>();
-        devExDemoItems.AddRange(new List<string> { "Better Debugging", "Auto Refresh", "CSS Isolation", "Input File Support",
-"Virtualization", "Azure Static site support" });
-    }
 }

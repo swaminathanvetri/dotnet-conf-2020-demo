@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 namespace dotnet_conf_2020_demo
 {
     public class ImageProperties

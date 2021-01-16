@@ -1,0 +1,116 @@
+﻿@page "/virtualize"
+@using System.Diagnostics;
+
+<h3>Virtualization Demo</h3>
+<hr>
+
+<div class="row">
+    <h3> Non Virtualized table</h3>
+</div>
+
+@* @foreach (var blogItem in blogItems)
+    {
+    <div>
+    <h2>@blogItem.Title</h2>
+    <h5>@blogItem.PublishDate</h5>
+    </div>
+    } *@
+<div class="row" style="height:400px; overflow-y: scroll;">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Published Date</th>
+                <th>Tags</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in blogItems)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.PublishedDate</td>
+                    <td>
+                        @foreach (var tag in @item.Tags)
+                        {
+                            <span style="background-color: darkgray;">@tag</span><span>&nbsp;</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+<hr>
+<div class="row">
+    <h3> Virtualized table</h3>
+    <hr>
+</div>
+<div class="row" style="height:400px; overflow-y: scroll;">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Title</th>
+                <th>Published Date</th>
+                <th>Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+            <Virtualize Items="@blogItems" Context="blogItem">
+                <tr>
+                    <td>@blogItem.Title</td>
+                    <td>@blogItem.PublishedDate</td>
+                    <td>
+
+                        @foreach (var tag in @blogItem.Tags)
+                        {
+                            <span style="background-color: azure;">@tag&nbsp;</span>
+                        }
+                    </td>
+                </tr>
+            </Virtualize>
+        </tbody>
+    </table>
+
+
+</div>
+
+@code {
+    private List<BlogItem> blogItems;
+
+
+    protected override void OnInitialized()
+    {
+        Stopwatch loadTimeWatch = new Stopwatch();
+        blogItems = new List<BlogItem>();
+
+        int itemsCount = 1000;
+
+        loadTimeWatch.Start();
+        blogItems = getBlogItems(itemsCount);
+        loadTimeWatch.Stop();
+        Console.WriteLine($"Time taken to create {itemsCount} items : {loadTimeWatch.Elapsed.TotalMilliseconds} ms");
+
+    }
+
+    private List<BlogItem> getBlogItems(int itemsCount)
+    {
+        List<BlogItem> blogItems = new List<BlogItem>();
+
+        for (int i = 1; i <= itemsCount; i++)
+        {
+            blogItems.Add(new BlogItem
+            {
+                Title = $"Blog Post - {i}",
+                PublishedDate = DateTime.Now.AddDays(-i),
+                Tags = new List<string>
+{"dotnet","blazor", "grpc"}
+            });
+        }
+        return blogItems;
+    }
+}
