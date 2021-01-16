@@ -66,9 +66,6 @@
         </div>
     </div>
 </div>
-
-
-
 @code {
     private IList<string> imageDataUrls = new List<string>();
 
@@ -117,6 +114,10 @@
 
     private async Task OnResizeFileChange(InputFileChangeEventArgs e)
     {
+        /* if (resizedImageProperties.MaxHeight == 0 || resizedImageProperties.MaxHeight < 0)
+        {
+        textHeight.FocusAsync();
+    } */
         originalFile = e.File;
         var originalImageBuffer = new byte[originalFile.Size];
         await e.File.OpenReadStream().ReadAsync(originalImageBuffer);
