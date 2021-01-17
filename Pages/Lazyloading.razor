@@ -1,0 +1,107 @@
+﻿@using Newtonsoft.Json
+@using OfficeOpenXml;
+@using System.Data
+@using System.IO
+@using System.Collections.Generic;
+
+@page "/lazyloading"
+<h3>Lazyloading</h3>
+<hr />
+
+<h4> Upload excel sheet to proceed</h4>
+<p>
+    <InputFile OnChange="@OnFileUpload" />
+</p>
+
+@if (weatherDataList is not null && weatherDataList.Count > 0)
+{
+    <div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Temperature</th>
+                <th>Weather</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in weatherDataList)
+                {
+                    <tr>
+                        <td>@item.City</td>
+                        <td>@item.Temperature</td>
+                        <td>@item.Weather</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+}
+
+
+
+@code {
+    private List<WeatherData> weatherDataList;
+
+    protected override Task OnInitializedAsync()
+    {
+        weatherDataList = new List<WeatherData>();
+        return base.OnInitializedAsync();
+    }
+
+    private async Task OnFileUpload(InputFileChangeEventArgs e)
+    {
+        DataTable weatherDataTable = new DataTable();
+        var fileSize = e.File.Size;
+        var buffer = new byte[fileSize];
+        await e.File.OpenReadStream(512000, new System.Threading.CancellationToken()).ReadAsync(buffer);
+        var fileStream = new MemoryStream(buffer);
+        weatherDataList = ReadFromExcel<List<WeatherData>>(fileStream, true);
+    }
+
+    // Code snippet from https://www.thecodebuzz.com/read-write-excel-in-dotnet-core-epplus/
+    private T ReadFromExcel<T>(Stream fileStream, bool hasHeader = true)
+    {
+        using (var excelPack = new ExcelPackage())
+        {
+            excelPack.Load(fileStream);
+
+            //Lets Deal with first worksheet.(You may iterate here if dealing with multiple sheets)
+            var ws = excelPack.Workbook.Worksheets[0];
+
+            //Get all details as DataTable -because Datatable make life easy :)
+            DataTable excelasTable = new DataTable();
+            foreach (var firstRowCell in ws.Cells[1, 1, 1, ws.Dimension.End.Column])
+            {
+                //Get colummn details
+                if (!string.IsNullOrEmpty(firstRowCell.Text))
+                {
+                    string firstColumn = string.Format("Column {0}", firstRowCell.Start.Column);
+                    excelasTable.Columns.Add(hasHeader ? firstRowCell.Text : firstColumn);
+                }
+            }
+            var startRow = hasHeader ? 2 : 1;
+            //Get row details
+            for (int rowNum = startRow; rowNum <= ws.Dimension.End.Row; rowNum++)
+            {
+                var wsRow = ws.Cells[rowNum, 1, rowNum, excelasTable.Columns.Count];
+                DataRow row = excelasTable.Rows.Add();
+                foreach (var cell in wsRow)
+                {
+                    row[cell.Start.Column - 1] = cell.Text;
+                }
+            }
+            //Get everything as generics and let end user decides on casting to required type
+            var generatedType = JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(excelasTable));
+            return (T)Convert.ChangeType(generatedType, typeof(T));
+        }
+    }
+
+    public class WeatherData
+    {
+        public string City { get; set; }
+        public string Temperature { get; set; }
+        public string Weather { get; set; }
+    }
+}
