@@ -1,20 +1,13 @@
 ﻿@page "/virtualize"
 @using System.Diagnostics;
 
-<h3>Virtualization Demo</h3>
+<h1>Virtualization Demo</h1>
 <hr>
 
 <div class="row">
     <h3> Non Virtualized table</h3>
 </div>
 
-@* @foreach (var blogItem in blogItems)
-    {
-    <div>
-    <h2>@blogItem.Title</h2>
-    <h5>@blogItem.PublishDate</h5>
-    </div>
-    } *@
 <div class="row" style="height:400px; overflow-y: scroll;">
 
     <table class="table table-striped">
@@ -81,7 +74,6 @@
 
 @code {
     private List<BlogItem> blogItems;
-
 
     protected override void OnInitialized()
     {

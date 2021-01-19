@@ -1,0 +1,68 @@
+﻿@page "/hostingmodels"
+
+<h1> Blazor WASM vs Server </h1>
+<hr>
+<br>
+
+<div class="row">
+    <div class="col-sm">
+        <div class="row">
+            <img src="assets/blazorWebAssembly.png" style="width:75%">
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="row">
+            <img src="assets/blazorserver.png" style="width:100%">
+        </div>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Hosting Model</th>
+                <th>Pros</th>
+                <th>Cons</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Blazor WebAssembly</td>
+                <td> 
+                    <ul>
+                        <li> True SPA, full interactivity </li>
+                        <li> Utilize client resources </li>
+                        <li> Supports offline, static sites, PWA scenarios </li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li> Larger download size </li>
+                        <li> Requires WebAssembly </li>
+                        <li> Still in preview </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>Blazor Server</td>
+                <td> 
+                    <ul>
+                        <li> Smaller download size, faster load time </li>
+                        <li> Running on fully featured .NET runtime </li>
+                        <li> Code never leaves the server </li>
+                        <li> Simplified architecture </li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li> Latency </li>
+                        <li> No offline support </li>
+                        <li> Consumes more server resources </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br>

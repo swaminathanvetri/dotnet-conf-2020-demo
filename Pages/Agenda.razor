@@ -1,11 +1,23 @@
 ﻿@page "/agenda"
 
-<h3>What's new in Blazor with .NET 5 ??</h3>
+<h1>Agenda</h1>
 <hr>
-
 <div class="row">
     <div class="col">
-        <div class="card">
+        <div class="card" style="width:23rem">
+                <div class="card-header text-bold">Introduction</div>
+                <div class="card-content">
+                    <ul>
+                        @foreach (var item in introAgendaItems)
+                        {
+                            <div><span class="oi oi-check"></span>&nbsp;&nbsp;@item</div>
+                        }
+                    </ul>
+                </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card" style="width:23rem">
             <div class="card-header">Developer Experience Updates</div>
             <div class="card-content">
                 <ul>
@@ -18,7 +30,7 @@
         </div>
     </div>
     <div class="col">
-        <div class="card">
+        <div class="card" style="width:23rem">
             <div class="card-header">Perf Improvement updates</div>
             <div class="card-content">
                 <ul>
@@ -31,22 +43,26 @@
         </div>
     </div>
 </div>
+<br/>
+
 
 @code {
     private List<string> devExDemoItems { get; set; }
 
     private List<string> perfDemoItems { get; set; }
 
+    private List<string> introAgendaItems {get; set;}
+
     protected override void OnInitialized()
     {
         devExDemoItems = new List<string>();
         perfDemoItems = new List<string>();
+        introAgendaItems = new List<string>();
+
+        introAgendaItems.AddRange(new List<string>{"What is Blazor ?" ,"Hosting Models", "Getting Started"});
         perfDemoItems.AddRange(new List<string> { "Virtualization", "LazyLoading", "Prerendering" });
         devExDemoItems.AddRange(new List<string> {
 "Better Debugging", "Auto Refresh", "CSS Isolation",
 "Input File Support", "Azure Static site support" });
     }
-
-
-
 }

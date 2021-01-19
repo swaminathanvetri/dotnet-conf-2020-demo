@@ -1,0 +1,47 @@
+﻿@page "/gettingstarted"
+<h1>Getting Started</h1>
+<hr>
+<div>
+    <h4>Prerequisites</h4>
+    <div>
+        <ul>
+            <li>.NET 5</li>
+            <li>VS Code</li>
+        </ul>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <ul>
+        <li>
+            <figure>
+                <figcaption>Creating a new blazor wasm app</figcaption>
+                <pre>
+                    <code contenteditable spellcheck="false">
+dotnet new blazorwasm -o first-blazor-wasm</code>
+                </pre>
+            </figure>
+        </li>
+        <li>
+         <figure>
+            <figcaption>Creating a new blazor server app </figcaption>
+            <pre>
+                <code contenteditable spellcheck="false">
+dotnet new blazorserver -o first-blazor-server</code>
+            </pre>
+         </figure>
+        </li>
+        <li>
+        <figure>
+            <figcaption>Creating a new razorcomponent</figcaption>
+            <pre>
+                <code contenteditable spellcheck="false">
+dotnet new razorcomponent -n ComponentName -o Pages/</code>
+            </pre>
+         </figure>
+        </li>
+    </ul>
+</div>
+@code {
+
+}
