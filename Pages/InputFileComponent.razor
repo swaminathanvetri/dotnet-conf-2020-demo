@@ -33,6 +33,11 @@
 <hr />
 <div>
     <h3> Image resizer Demo</h3>
+    <br>
+    <p>
+        <InputFile OnChange="@OnResizeFileChange" />
+    </p>
+
     <EditForm Model="@resizedImageProperties" OnSubmit="@OnSubmit">
         <label>Enter the height :
             <InputNumber @bind-Value="resizedImageProperties.MaxHeight"></InputNumber>
@@ -45,9 +50,7 @@
         <button type="submit">Resize</button>
     </EditForm>
 
-    <p>
-        <InputFile OnChange="@OnResizeFileChange" />
-    </p>
+    
     <div class="row">
         <div class="col">
             <div class="card">
