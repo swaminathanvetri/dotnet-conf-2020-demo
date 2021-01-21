@@ -119,17 +119,11 @@
 
     private async Task OnResizeFileChange(InputFileChangeEventArgs e)
     {
-        /* if (resizedImageProperties.MaxHeight == 0 || resizedImageProperties.MaxHeight < 0)
-        {
-        textHeight.FocusAsync();
-    } */
         originalFile = e.File;
         var originalImageBuffer = new byte[originalFile.Size];
         await e.File.OpenReadStream().ReadAsync(originalImageBuffer);
         originalImage = $"data:{format};base64,{Convert.ToBase64String(originalImageBuffer)}";
-
         await ResizeImage(resizedImageProperties.MaxWidth, resizedImageProperties.MaxHeight);
-
     }
 
     private async Task ResizeImage(int maxWidth, int maxHeight)

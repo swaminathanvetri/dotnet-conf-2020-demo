@@ -17,5 +17,4 @@
     <BlazorWebAssemblyLazyLoad Include="Newtonsoft.Json.dll" />
   </ItemGroup>
 
-
 </Project>
