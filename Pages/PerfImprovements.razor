@@ -1,0 +1,12 @@
+﻿@page "/perf"
+<h1>Performance Improvements</h1>
+<hr>
+<AgendaComponent AgendaItems ="PerfUpdates"/>
+@code {
+    private List<string> PerfUpdates { get; set; }
+    protected override void OnInitialized()
+    {   
+        PerfUpdates = new List<string>();
+        PerfUpdates.AddRange(new List<string> { "Virtualization", "LazyLoading", "Prerendering", "Browser Compatibility Analyzers", "Protected Local Storage", "Component Activators" });
+    }
+}

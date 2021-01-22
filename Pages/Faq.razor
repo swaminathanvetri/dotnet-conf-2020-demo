@@ -1,0 +1,24 @@
+﻿@page "/faq"
+<h1>FAQ</h1>
+<hr>
+
+<AgendaComponent AgendaItems="Questions" />
+@code {
+    private List<string> Questions { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Questions = new List<string>();
+        Questions.AddRange(new List<string>
+{
+"Do I always need .NET to run blazor based apps ?",
+"Can I use Blazor components in my MVC/Razor Pages App ?",
+"Can I combine Blazor with an existing Angular/React/Vue App ?",
+"Can I build mobile apps with Blazor ?",
+"Can I build PWA with Blazor ?",
+"Can I consume a gRPC service from blazor wasm app?",
+});
+
+    }
+
+}

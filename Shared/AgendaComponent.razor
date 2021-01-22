@@ -1,0 +1,10 @@
+﻿<ul>
+    @foreach (var item in AgendaItems)
+    {
+        <div><span class="oi oi-check"></span>&nbsp;&nbsp;@item</div>
+    }
+</ul>
+@code {
+    [Parameter]
+    public List<string> AgendaItems { get; set; }
+}

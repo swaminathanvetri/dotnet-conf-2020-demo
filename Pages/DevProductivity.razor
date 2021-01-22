@@ -1,0 +1,18 @@
+﻿@page "/devproductivity"
+
+<h1>Developer Productivity</h1>
+<hr>
+
+<AgendaComponent AgendaItems="devExDemoItems" />
+
+@code {
+    private List<string> devExDemoItems { get; set; }
+
+    protected override void OnInitialized()
+    {
+        devExDemoItems = new List<string>();
+        devExDemoItems.AddRange(new List<string> {
+"Better Debugging", "Auto Refresh", "CSS Isolation",
+"Input File Support", "Azure Static site support" });
+    }
+}
